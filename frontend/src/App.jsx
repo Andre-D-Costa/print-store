@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
-import ProductsPage from "./pages";
+import ProductsPage from "./pages/index.jsx";
 import Layout from "./components/Layout";
 
 export default function App() {

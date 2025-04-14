@@ -7,13 +7,12 @@ import loadRoutes from "./routes/index.js";
 const app = express();
 const port = 3000;
 app.use(cors());
+app.use(express.json());
 
 app.get("/health", async (req, res) => {
   res.json({ status: "ok" });
 });
 loadRoutes(app);
-
-console.log(process.env.MONGO_URL);
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
