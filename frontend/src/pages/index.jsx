@@ -22,7 +22,13 @@ export default function ProductsPage() {
         ) : (
           <div className="flex flex-wrap -m-4">
             {products.map((product, key) => (
-              <Product key={`${product.id}-${key}`} />
+              <Product
+                key={`${product.id}-${key}`}
+                name={product.name}
+                images={product.images}
+                category={product.category}
+                price={product.price}
+              />
             ))}
           </div>
         )}

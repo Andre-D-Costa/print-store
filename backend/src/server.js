@@ -26,7 +26,3 @@ main()
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-
-// Listar produtos no frontend
-// Criar endpoint de listar categorias no backend
-// Listar categorias no frontend

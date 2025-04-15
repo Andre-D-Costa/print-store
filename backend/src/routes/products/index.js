@@ -1,5 +1,6 @@
 import { response } from "express";
 import { Product } from "../../models/index.js";
+import { Category } from "../../models/index.js";
 import { z } from "zod";
 
 const RegexMongoObjectId = /^[0-9a-fA-F]{24}$/;
@@ -13,18 +14,13 @@ const productSchema = z
     name: z.string(),
     description: z.string().optional(),
     price: z.number().min(0),
-    images: z.array(z.string()).optional(),
+    images: z.array(z.string()),
     sku: z.string(),
     slug: z.string().toLowerCase(),
-    categoryId: z.string().optional(),
-    isActive: z.boolean().default(true).optional(),
+    categoryId: z.string().regex(RegexMongoObjectId),
+    isActive: z.boolean().default(true),
   })
   .strict();
-
-const name = z.string({
-  required_error: "Name is required",
-  invalid_type_error: "Name must be a string",
-});
 
 const productRoutes = [
   {
@@ -41,8 +37,8 @@ const productRoutes = [
     handler: async (req, res) => {
       try {
         const { id } = req.params;
-        const result = idSchema.safeParse(id);
-        if (!result.success) {
+        const response = idSchema.safeParse(id);
+        if (!response.success) {
           return res.status(400).json({ message: "Invalid ID input" });
         }
 
@@ -63,26 +59,23 @@ const productRoutes = [
       try {
         const response = productSchema.safeParse(req.body);
 
-        if (!result.success) {
+        if (!response.success) {
           return res.status(400).json({
             message: "Invalid data input",
-            issues: result.error.issues,
+            issues: response.error.issues,
           });
         }
 
         const category = await Category.findById(response.data.categoryId);
 
         if (!category) {
-          return res.status(400).json({ message: "Category not found" });
+          return res.status(404).json({ message: "Category not found" });
         }
         const product = await Product.create({
           ...response.data,
           category: response.data.categoryId,
         });
-
-        await product.save();
-
-        return res.status(201).json(req.product);
+        return res.status(201).json(product);
       } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
@@ -90,21 +83,77 @@ const productRoutes = [
     },
   },
   {
-    method: "put",
-    path: "/products",
+    method: "get",
+    path: "/category",
     handler: async (req, res) => {
-      const products = await Product.find().populate("category");
-      return res.json(products);
+      const category = await Category.find();
+      return res.status(200).json(category);
     },
   },
   {
-    method: "delete",
-    path: "/products",
+    method: "get",
+    path: "/category/:id",
     handler: async (req, res) => {
-      const products = await Product.find().populate("category");
-      return res.json(products);
+      try {
+        const { id } = req.params;
+        const response = idSchema.safeParse(id);
+        if (!response.success) {
+          return res.status(400).json({ message: "Invalid ID input" });
+        }
+
+        const category = await Category.findById(id);
+        if (!category) {
+          return res.status(404).json({ message: "Category not found" });
+        }
+        return res.status(200).json(category);
+      } catch {
+        return res.status(500).json({ message: "Internal server error" });
+      }
     },
   },
+  {
+    method: "put",
+    path: "/products/:id",
+    handler: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const product = await Product.findById(id).populate("category");
+        if (!product) {
+          return res.status(404).json({ message: "Product not found" });
+        }
+        const response = productSchema.safeParse(req.body);
+        if (!response.success) {
+          return res.status(400).json({
+            message: "Invalid data input",
+            issues: response.error.issues,
+          });
+        }
+        const category = await Category.findById(response.data.categoryId);
+        if (!category) {
+          return res.status(404).json({ message: "Category not found" });
+        }
+        const updatedProduct = await Product.findByIdAndUpdate(
+          id,
+          { ...response.data, category: response.data.categoryId },
+          { new: true }
+        );
+        if (!updatedProduct) {
+          return res.status(404).json({ message: "Product not found" });
+        }
+        return res.status(200).json(updatedProduct);
+      } catch {
+        return res.status(500).json({ message: "Internal server error" });
+      }
+    },
+  },
+  // {
+  //   method: "delete",
+  //   path: "/products",
+  //   handler: async (req, res) => {
+  //     const products = await Product.find().populate("category");
+  //     return res.json(products);
+  //   },
+  // },
 ];
 
 export default productRoutes;

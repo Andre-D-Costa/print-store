@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const categorySchema = new mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
@@ -12,7 +12,7 @@ export const categorySchema = new mongoose.Schema({
     type: String,
     lowercase: true,
     unique: true,
-    require: true,
+    required: true,
     index: true,
   },
 });
