@@ -22,6 +22,8 @@ const productSchema = z
   })
   .strict();
 
+const slugSchema = z.string().toLowerCase();
+
 const productRoutes = [
   {
     method: "get",
@@ -33,16 +35,21 @@ const productRoutes = [
   },
   {
     method: "get",
-    path: "/products/:id",
+    path: "/products/:slug",
     handler: async (req, res) => {
       try {
-        const { id } = req.params;
-        const response = idSchema.safeParse(id);
+        const { slug } = req.params;
+        const response = slugSchema.safeParse(slug);
         if (!response.success) {
-          return res.status(400).json({ message: "Invalid ID input" });
+          return res.status(400).json({
+            message: "Invalid data input",
+            issues: response.error.issues,
+          });
         }
 
-        const product = await Product.findById(id).populate("category");
+        const product = await Product.findOne({ slug: response.data }).populate(
+          "category"
+        );
         if (!product) {
           return res.status(404).json({ message: "Product not found" });
         }
@@ -92,15 +99,9 @@ const productRoutes = [
   },
   {
     method: "get",
-    path: "/category/:id",
+    path: "/category/",
     handler: async (req, res) => {
       try {
-        const { id } = req.params;
-        const response = idSchema.safeParse(id);
-        if (!response.success) {
-          return res.status(400).json({ message: "Invalid ID input" });
-        }
-
         const category = await Category.findById(id);
         if (!category) {
           return res.status(404).json({ message: "Category not found" });
