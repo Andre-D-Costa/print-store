@@ -1,7 +1,7 @@
 import productRoutes from "./products/index.js";
-import userRoutes from "./users/index.js";
+import authRoutes from "./auth/index.js";
 
-const routes = [...productRoutes, ...userRoutes];
+const routes = [...productRoutes, ...authRoutes];
 
 export default function loadRoutes(app) {
   routes.forEach((route) => {

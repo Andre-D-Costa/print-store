@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Product from "../components/Product";
 import { getProducts } from "../services/products.js";
+import "../styles/products.css";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -15,19 +16,21 @@ export default function ProductsPage() {
   }
 
   return (
-    <section className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mx-auto">
+    <section class="products__mainContainer">
+      <div>
         {products.length === 0 ? (
-          <p>No products available at the moment. Please check again later.</p>
+          <p class="products__empty">
+            No products available at the moment. Please check again later.
+          </p>
         ) : (
-          <div className="flex flex-wrap -m-4">
+          <div class="products__container">
             {products.map((product, key) => (
               <Product
                 key={`${product.id}-${key}`}
                 name={product.name}
                 images={product.images}
                 category={product.category}
-                price={product.price}
+                price={`€${product.price}`}
               />
             ))}
           </div>

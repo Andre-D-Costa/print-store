@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import Category from "./Category";
 import { getCategories } from "../services/categories.js";
 import { ShoppingCart } from "lucide-react";
+import { User } from "lucide-react";
+import { Heart } from "lucide-react";
+import { useNavigate } from "react-router";
+import { LogOut } from "lucide-react";
+
+import "../styles/header.css";
 
 export default function Header() {
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCategories().then((res) => {
@@ -13,34 +20,51 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="text-gray-600 body-font">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          <svg
-            cursor={"pointer"}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg>
-          <span className="ml-3 text-xl">Print Store</span>
-        </a>
-        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+    <header>
+      <div class="header__mainContainer">
+        <section class="header__siteName" onClick={() => navigate("/")}>
+          <div class="logoContainer__1"></div>
+          <div class="logoContainer__2"></div>
+          <div class="logoContainer__3"></div>
+          <h2 class="header__siteName--text">André Costa</h2>
+        </section>
+        <nav class="mainContainer__navbar--desktop--link">
           {categories.map((category, key) => (
             <Category
+              class="header__linkBtn"
               key={`category-key-${category.id}-${key}`}
               name={category.name}
             />
           ))}
         </nav>
-        <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          <ShoppingCart />
-          <sup className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-indigo-500 text-white cursor-pointer">
-            0
-          </sup>
-        </button>
+        <div class="header__btnsContainer">
+          {/* <button title="Go to your profile" class="header__cartBtn plusIcon">
+            +
+          </button> */}
+          <button
+            onClick={() => navigate("/login")}
+            title="See you soon!"
+            class="header__cartBtnLogout"
+          >
+            <LogOut />
+          </button>
+          <button
+            title="Adjust your account's settings"
+            class="header__cartBtn"
+          >
+            <User />
+          </button>
+          <button title="Take a look at your wishlist" class="header__cartBtn">
+            <Heart />
+          </button>
+          <button
+            title="Confirm your shopping cart's content"
+            class="header__cartBtn"
+          >
+            <ShoppingCart />
+            <sup class="header__cartQtty">32</sup>
+          </button>
+        </div>
       </div>
     </header>
   );

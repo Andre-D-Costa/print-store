@@ -118,24 +118,25 @@ const productRoutes = [
     handler: async (req, res) => {
       try {
         const { id } = req.params;
-        const product = await Product.findById(id).populate("category");
-        if (!product) {
-          return res.status(404).json({ message: "Product not found" });
-        }
-        const response = productSchema.safeParse(req.body);
+        const response = idSchema.safeParse(id);
         if (!response.success) {
           return res.status(400).json({
             message: "Invalid data input",
             issues: response.error.issues,
           });
         }
-        const category = await Category.findById(response.data.categoryId);
-        if (!category) {
-          return res.status(404).json({ message: "Category not found" });
+        const responseBody = productSchema.safeParse(req.body);
+        if (!responseBody.success) {
+          return res.status(400).json({
+            message: "Invalid data input",
+            issues: responseBody.error.issues,
+          });
         }
         const updatedProduct = await Product.findByIdAndUpdate(
           id,
-          { ...response.data, category: response.data.categoryId },
+          {
+            ...responseBody.data,
+          },
           { new: true }
         );
         if (!updatedProduct) {

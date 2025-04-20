@@ -28,7 +28,7 @@ export default function ProductDetails() {
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                {product.category?.name ?? ""}
+                {product.category.name}
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {product.name}
@@ -38,10 +38,10 @@ export default function ProductDetails() {
 
               <div className="flex mt-6">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  {product.price}
+                  €{product.price}
                 </span>
                 <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                  Comprar
+                  Buy
                 </button>
               </div>
             </div>
