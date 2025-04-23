@@ -1,60 +1,99 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useEffect } from "react";
 
 // Cria o context com os seus valores
-const CartContext = createContext({
-  cart: null,
-  addCart: () => {},
-  removeCart: () => {},
+export const CartContext = createContext({
+  cart: [],
+  quantity: 0,
+  total: 0,
+  addToCart: () => {},
+  removeFromCart: () => {},
+  clearCart: () => {},
 });
 
 // Declara os valores no provider do context
 export default function CartContextProvider({ children }) {
-  const [cart, setCart] = useState({
-    items: [],
-    cartQuantity: 0,
-    total: 0, // preço
-  });
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
-  const addCart = (input) => {
-    const cartItem = cart.items.find((item) => item.id === input.id);
-    if (cartItem) {
-      const newCartItem = cart.items.map((item) => {
-        const quantity =
-          item.id === input.id ? item.quantity + 1 : item.quantity;
-        return {
-          ...item,
-          quantity,
-        };
+  const saveLocalStorage = (items, total, quantity) => {
+    localStorage.setItem(
+      "cart",
+      JSON.stringify({
+        items,
+        total,
+        quantity,
+      })
+    );
+  };
+
+  const addToCart = (product) => {
+    const cartProduct = cart.find((cartItem) => cartItem._id === product._id);
+    if (cartProduct) {
+      // se o produto existe
+      const newCart = cart.map((cartItem) => {
+        if (cartItem._id === cartProduct._id) {
+          return {
+            ...cartItem,
+            quantity: cartItem.quantity + 1,
+          };
+        } else {
+          return cartItem;
+        }
       });
-      setCart({
-        ...cart,
-        cartQuantity: cart.cartQuantity + 1,
-        items: newCartItem,
-        total: cart.total + input.price,
-      });
+      const cartValues = newCart.reduce(
+        (prev, acc) => {
+          return {
+            quantity: acc.quantity + prev.quantity,
+            totalPrice: acc.price * acc.quantity + prev.totalPrice,
+          };
+        },
+        {
+          quantity: 0,
+          totalPrice: 0,
+        }
+      );
+      setQuantity(cartValues).quantity;
+      setTotal(cartValues.totalPrice);
+      setCart(newCart);
+      saveLocalStorage(newCart, cartValues.totalPrice, cartValues.quantity);
     } else {
-      setCart({
-        ...cart,
-        cartQuantity: cart.cartQuantity + 1,
-        items: [{ ...input, quantity: 1 }, ...cart.items],
-        total: cart.total + input.price,
-      });
+      // se o produto não existe
+      setQuantity(quantity + 1);
+      setTotal(total + product.price);
+      setCart([...cart, { ...product, quantity: 1 }]);
+      saveLocalStorage(
+        [...cart, { ...product, quantity: 1 }],
+        total + product.price,
+        quantity + 1
+      );
     }
   };
 
-  const removeCart = (id) => {
-    const excludeItem = cart.items.find((item) => item.id === id);
-    const filteredList = cart.items.filter((item) => item.id !== id);
-    setCart({
-      ...cart,
-      cartQuantity: cart.cartQuantity - excludeItem.quantity,
-      items: filteredList,
-      total: cart.total - excludeItem.quantity * excludeItem.price,
-    });
+  const removeFromCart = () => {};
+
+  const clearCart = () => {
+    setQuantity(0);
+    setTotal(0);
+    setCart([]);
+    saveLocalStorage([], 0, 0);
   };
 
+  useEffect(() => {
+    const storageCart = localStorage.getItem("cart");
+
+    if (storageCart) {
+      const cartObj = JSON.parse(storageCart);
+      setCart(cartObj.items);
+      setQuantity(cartObj.quantity);
+      setTotal(cartObj.total);
+    }
+  }, []);
+
   return (
-    <CartContext.Provider value={{ cart, addCart, removeCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart, total, quantity }}
+    >
       {children}
     </CartContext.Provider>
   );

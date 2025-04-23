@@ -1,0 +1,90 @@
+.cart__mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100dvh;
+  background-color: #f0f0f0;
+  font-family: "Host Grotesk", sans-serif;
+  font-style: normal;
+  overflow-y: auto;
+}
+
+.cart__title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #000000;
+  align-self: flex-start;
+}
+
+.cart__checkoutTitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #000000;
+}
+
+.cart__itemsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100dvh;
+  padding: 2rem;
+}
+
+.cart__checkoutContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-right: 5rem;
+}
+
+.cart__totalsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  width: 250px;
+}
+
+.cart__subTotalText {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #292929;
+  padding: 1rem;
+}
+
+.cart__totalText {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #292929;
+  border-top: 4px solid #f0f0f0;
+  padding: 1rem;
+}
+
+.cart__purchaseBtn {
+  display: flex;
+  color: #989898;
+  width: 250px;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s ease-in-out, color 0.6s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 0.3em 0.2em #d8d8d8;
+    color: #000000;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}

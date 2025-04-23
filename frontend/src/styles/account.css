@@ -1,0 +1,30 @@
+.account__mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  height: 100dvh;
+  width: auto;
+  z-index: 10;
+  background-color: white;
+  color: black;
+  font-family: "Host Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  gap: 2rem;
+}
+
+.account__userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.account__userText {
+  font-size: 1rem;
+  font-weight: 100;
+  color: #989898;
+}

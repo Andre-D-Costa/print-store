@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { register } from "../../services/auth";
+import { AuthContext } from "../../context/auth";
 
 import "../../styles/register.css";
 
 export default function RegistrationPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const { handleLogin, isLogged } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(name, email, password);
+    const response = await register(name, email, password);
+    handleLogin(response.accessToken);
+    navigate("/account");
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate("/account");
+    }
+  }, [isLogged, navigate]);
 
   return (
     <>
@@ -88,13 +98,7 @@ export default function RegistrationPage() {
             </div>
 
             <div>
-              <button
-                onClick={() => {
-                  navigate("/");
-                }}
-                type="submit"
-                class="register__submitButton"
-              >
+              <button type="submit" class="register__submitButton">
                 Start
               </button>
             </div>

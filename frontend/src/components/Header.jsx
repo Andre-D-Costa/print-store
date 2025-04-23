@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Category from "./Category";
+import { User, Heart, LogOut, ShoppingCart } from "lucide-react";
 import { getCategories } from "../services/categories.js";
-import { ShoppingCart } from "lucide-react";
-import { User } from "lucide-react";
-import { Heart } from "lucide-react";
 import { useNavigate } from "react-router";
-import { LogOut } from "lucide-react";
+import { CartContext } from "../context/cart.jsx";
 
 import "../styles/header.css";
 
 export default function Header() {
+  const { quantity } = useContext(CartContext);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -42,15 +41,16 @@ export default function Header() {
             +
           </button> */}
           <button
-            onClick={() => navigate("/login")}
             title="See you soon!"
             class="header__cartBtnLogout"
+            onClick={() => navigate("/login")}
           >
             <LogOut />
           </button>
           <button
             title="Adjust your account's settings"
             class="header__cartBtn"
+            onClick={() => navigate("/login")}
           >
             <User />
           </button>
@@ -58,11 +58,12 @@ export default function Header() {
             <Heart />
           </button>
           <button
+            onClick={() => navigate("/cart")}
             title="Confirm your shopping cart's content"
             class="header__cartBtn"
           >
             <ShoppingCart />
-            <sup class="header__cartQtty">32</sup>
+            <sup class="header__cartQtty">{quantity}</sup>
           </button>
         </div>
       </div>

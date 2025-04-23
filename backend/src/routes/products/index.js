@@ -1,4 +1,3 @@
-import { response } from "express";
 import { Product } from "../../models/index.js";
 import { Category } from "../../models/index.js";
 import { z } from "zod";

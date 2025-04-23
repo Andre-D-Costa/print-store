@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { login } from "../../services/auth";
+import { AuthContext } from "../../context/auth";
 
 import "../../styles/login.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { handleLogin, isLogged } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    const response = await login(email, password);
+    handleLogin(response.accessToken);
+    navigate("/account");
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate("/account");
+    }
+  }, [isLogged, navigate]);
 
   return (
     <>
@@ -64,13 +74,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <button
-                onClick={() => {
-                  navigate("/");
-                }}
-                type="submit"
-                class="login__submitButton"
-              >
+              <button type="submit" class="login__submitButton">
                 Login
               </button>
             </div>

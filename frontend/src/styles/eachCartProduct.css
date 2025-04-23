@@ -1,0 +1,143 @@
+.cart__shoppingBagIcon {
+  color: #989898;
+}
+
+.cart__emptyText {
+  font-size: 1.5rem;
+  font-weight: 100;
+  color: #000000;
+}
+
+.cart__emptyProducts {
+  font-size: 1.5rem;
+  font-weight: 100;
+  color: #989898;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #000000;
+  }
+}
+
+.cart__list {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 2rem;
+}
+
+.cart__itemImage {
+  display: flex;
+  align-self: flex-start;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart__itemDetails {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.cart__itemName {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #989898;
+}
+
+.cart__itemPrice {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #292929;
+}
+.cart__itemQtty {
+  font-size: 1rem;
+  font-weight: 300;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  color: #292929;
+}
+
+.cart__itemTotal {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #292929;
+}
+
+.cart__btnsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cart__minusBtn {
+  display: flex;
+  color: #989898;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: box-shadow 0.3s ease-in-out, color 0.6s ease-in;
+
+  &:hover {
+    box-shadow: 0 0 0.3em 0.2em #d8d8d8;
+    color: #000000;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.cart__plusBtn {
+  display: flex;
+  color: #989898;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: box-shadow 0.3s ease-in-out, color 0.6s ease-in;
+
+  &:hover {
+    box-shadow: 0 0 0.3em 0.2em #d8d8d8;
+    color: #000000;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.cart__removeBtn {
+  display: flex;
+  color: #989898;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: box-shadow 0.3s ease-in-out, color 0.6s ease-in;
+
+  &:hover {
+    box-shadow: 0 0 0.3em 0.2em #d8d8d8;
+    color: #000000;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}

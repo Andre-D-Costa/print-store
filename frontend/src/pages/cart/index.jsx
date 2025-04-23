@@ -1,42 +1,104 @@
-import React from "react";
-import { useCartContext } from "../../context/cart";
+import { useContext } from "react";
+import CartProduct from "../../components/CartProduct";
+import { CartContext } from "../../context/cart";
 
-export default function Cart() {
-  const { cart, removeCart } = useCartContext();
+import "../../styles/cart.css";
+
+export default function CartPage() {
+  const { cart, total } = useContext(CartContext);
 
   return (
-    <div className="container mx-auto p-4 mt-6">
-      <h2 className="text-2xl font-bold mb-4">Cart</h2>
-      {cart.items.length === 0 ? (
-        <p className="text-gray-600">Your Cart is empty.</p>
-      ) : (
-        <>
-          <ul className="border rounded-lg p-4 bg-gray-50">
-            {cart.items.map((item, key) => (
-              <li
-                key={`cart-item-${item.id}-${key}`}
-                className="flex justify-between items-center p-2 border-b last:border-none"
-              >
-                <span className="font-semibold">{item.name}</span>
-                <span className="text-gray-600">€ {item.price}</span>
-                <span className="text-gray-600">x {item.quantity}</span>
-                <span className="text-gray-600">
-                  € {item.quantity * item.price}
-                </span>
-                <button
-                  onClick={() => {
-                    removeCart(item.id);
-                  }}
-                  className="text-indigo-600 hover:text-indigo-800 cursor-pointer"
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-          <p>Total: €{cart.total}</p>
-        </>
-      )}
+    <div class="cart__mainContainer">
+      <div class="cart__itemsContainer">
+        <h2 class="cart__title">Your shopping haul so far:</h2>
+        {cart.map((product) => (
+          <CartProduct key={product._id} product={product} />
+        ))}
+      </div>
+      <div class="cart__checkoutContainer">
+        <h2 class="cart__checkoutTitle">Checkout</h2>
+        <div class="cart__totalsContainer">
+          <div class="cart__subTotalText">
+            <span>Sub Total:</span>
+            <span>€{total.toFixed(2)}</span>
+          </div>
+          <div class="cart__subTotalText">
+            <span>Entrega:</span>
+            <span>€0.00</span>
+          </div>
+          <div class="cart__subTotalText">
+            <span>IVA:</span>
+            <span>€0.00</span>
+          </div>
+          <div class="cart__totalText">
+            <span>Total:</span>
+            <span>€{total.toFixed(2)}</span>
+          </div>
+        </div>
+        <button class="cart__purchaseBtn">Finish</button>
+      </div>
     </div>
   );
 }
+
+// import React from "react";
+// import { useNavigate } from "react-router";
+// import { useCartContext } from "../../context/cart";
+// import CartProduct from "../../components/CartProduct";
+// import { ShoppingBag } from "lucide-react";
+
+// import "../../styles/cart.css";
+
+// export default function CartPage() {
+//   const navigate = useNavigate();
+//   const { cart, removeCart } = useCartContext();
+
+//   return (
+//     <div class="cart__mainContainer">
+//       {cart.items.length === 0 ? (
+//         <>
+//           <div class="cart__icon">
+//             <ShoppingBag />
+//           </div>
+//           <p class="cart__emptyText">
+//             Your shopping bag is empty at the moment. Take a look at our{" "}
+//             <a
+//               class="cart__emptyProducts"
+//               onClick={() => {
+//                 navigate("/");
+//               }}
+//             >
+//               products.
+//             </a>
+//           </p>
+//         </>
+//       ) : (
+//         <>
+//           <ul class="cart__list">
+//             {cart.items.map((item, key) => (
+//               <li key={`cart-item-${item.id}-${key}`} class="cart__listItem">
+//                 <div class="spans__container">
+//                   <span class="cart__itemName">{item.name}</span>
+//                   <span class="cart__itemPrice">€ {item.price}</span>
+//                   <span class="cart__itemQtty">x {item.quantity}</span>
+//                   <span class="cart__itemTotal">
+//                     € {item.quantity * item.price}
+//                   </span>
+//                 </div>
+//                 <button
+//                   onClick={() => {
+//                     removeCart(item.id);
+//                   }}
+//                   class="cart__removeBtn"
+//                 >
+//                   Remove
+//                 </button>
+//               </li>
+//             ))}
+//           </ul>
+//           <p class="cart__Total">Total: €{cart.total}</p>
+//         </>
+//       )}
+//     </div>
+//   );
+// }
