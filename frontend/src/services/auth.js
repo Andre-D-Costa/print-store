@@ -1,5 +1,7 @@
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 export const register = async (name, email, password) => {
-  return fetch("https://print-store.onrender.com/auth/register", {
+  return fetch(backendUrl + "/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +11,7 @@ export const register = async (name, email, password) => {
 };
 
 export const login = async (email, password) => {
-  return fetch("https://print-store.onrender.com/auth/login", {
+  return fetch(backendUrl + "/auth/login", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +21,7 @@ export const login = async (email, password) => {
 };
 
 export const logout = async () => {
-  return fetch("https://print-store.onrender.com/auth/logout", {
+  return fetch(backendUrl + "/auth/logout", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +49,7 @@ export const logout = async () => {
 // };
 
 export const resetPassword = async (token, password) => {
-  return fetch("https://print-store.onrender.com/auth/reset-password", {
+  return fetch(backendUrl + "/auth/reset-password", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -57,7 +59,7 @@ export const resetPassword = async (token, password) => {
 };
 
 export const changePassword = async (oldPassword, newPassword) => {
-  return fetch("https://print-store.onrender.com/auth/change-password", {
+  return fetch(backendUrl + "/auth/change-password", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
