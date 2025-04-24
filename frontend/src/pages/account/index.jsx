@@ -43,7 +43,12 @@ export default function AccountPage() {
             <h3 class="account__userSubSubText">Address:</h3>
             <h3 class="account__userSubSubText">Payment Methods:</h3>
             <br />
-            <h3 class="account__userSubSubSubText">Change password</h3>
+            <h3
+              onClick={() => navigate("/password")}
+              class="account__userSubSubSubText"
+            >
+              Change password
+            </h3>
             <h3
               onClick={() => {
                 handleLogout();
