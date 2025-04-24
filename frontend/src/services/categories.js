@@ -1,3 +1,5 @@
 export const getCategories = async () => {
-  return fetch("http://localhost:3000/categories").then((resp) => resp.json());
+  return fetch("https://print-store.onrender.com/categories").then((resp) =>
+    resp.json()
+  );
 };
