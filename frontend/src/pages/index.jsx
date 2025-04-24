@@ -11,17 +11,18 @@ export default function ProductsPage() {
       setProducts(res);
     });
   }, []);
-  // if (!products) {
-  //   return <p>Loading...</p>;
-  // }
 
   return (
     <section class="products__mainContainer">
       <div>
         {products.length === 0 ? (
-          <p class="products__emptyContainer">
-            No products available at the moment. Please check again later.
-          </p>
+          <div class="dashboard__loadingSpinner">
+            <div class="dashboard__logoSpinnerContainer--1">
+              <div class="dashboard__logoSpinnerContainer--2">
+                <div class="dashboard__logoSpinnerContainer--3"></div>
+              </div>
+            </div>
+          </div>
         ) : (
           <div class="products__container">
             {products.map((product, key) => (

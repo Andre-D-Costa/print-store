@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  width: auto;
+  width: 100dvw;
   height: 3.5rem;
   z-index: 10;
   background-color: white;
@@ -11,7 +11,20 @@
   font-family: "Host Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  padding: 0.5rem;
+  padding: 1rem;
+}
+
+.header__siteName {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-weight: 100;
+  cursor: pointer;
+  width: 250px;
+}
+
+.header__siteName--text {
+  font-size: 1.5rem;
 }
 
 .logoContainer__1 {
@@ -66,19 +79,6 @@
   }
 }
 
-.header__siteName {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  font-weight: 100;
-  padding: 0.5rem;
-  cursor: pointer;
-}
-
-.header__siteName--text {
-  font-size: 1.5rem;
-}
-
 /* .mainContainer__navbar--desktop--text {
   display: flex;
   font-weight: 100;
@@ -90,15 +90,8 @@
   text-decoration: none;
   color: #7a7a7a;
   display: flex;
-  gap: 1.5rem;
+  gap: 2.5rem;
   font-weight: 100;
-  padding: 1rem;
-  /* transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; */
-
-  /* &:hover {
-    box-shadow: 0 0 0.3em 0.2em #f1f1f1;
-    transform: scale(1.005);
-  } */
 }
 
 .header__linkBtn {
@@ -113,12 +106,36 @@
 
 .header__btnsContainer {
   display: flex;
-  flex-direction: flex-end;
-  gap: 0.5rem;
+  width: 250px;
+  gap: 2.5rem;
   align-items: center;
-  margin-right: 1rem;
-  /* padding-left: 4rem; */
-  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.header__btnsContainerAnon {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: center;
+}
+
+.header__cartBtnAnon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1em;
+  background-color: #ffffff;
+  color: #e4e4e4;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.5s ease-in-out;
+
+  &:hover {
+    color: #989898;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
 }
 
 .header__cartBtn {
@@ -126,7 +143,6 @@
   justify-content: center;
   align-items: center;
   height: 1em;
-  padding: 1.5rem;
   background-color: #ffffff;
   color: #989898;
   font-size: 1.5rem;
@@ -142,7 +158,6 @@
   justify-content: center;
   align-items: center;
   height: 1em;
-  padding: 1.5rem;
   background-color: #ffffff;
   color: #e4e4e4;
   font-size: 1.5rem;
@@ -163,6 +178,13 @@
   font-size: 1rem;
   font-weight: bold;
 }
+
+.header__cartQttyAnon {
+  color: #ff8d8d;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 /* 
 .plusIcon {
   background-color: white;
@@ -175,16 +197,6 @@
   }
 }
 
-.settIcon {
-  position: absolute;
-  background-color: #f1f1f1;
-  color: #989898;
-  transition: transform 0.3s ease-in-out;
-
-  &:hover {
-    transform: translateX(-5rem);
-  }
-} */
 
 /* .mainContainer__navbar--mobile {
   display: flex;

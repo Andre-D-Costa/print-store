@@ -13,24 +13,40 @@
 .eachProduct__container {
   display: flex;
   gap: 2rem;
+  /* align-content: space-between; */
+  /* justify-content: space-between; */
 }
 
 .eachProduct__image {
   width: 500px;
-  height: auto;
+  height: 500px;
+  object-fit: cover;
 }
 
 .eachProduct__info {
   display: flex;
   flex-direction: column;
-  align-content: space-between;
   gap: 1rem;
 }
 
 .eachProduct__details {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  width: 300px;
+  height: 500px;
+  justify-content: space-between;
+}
+
+.eachProduct__textInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.eachProduct__priceInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .eachProduct__category {
@@ -57,7 +73,7 @@
 }
 
 .eachProduct__price {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 100;
   color: #000000;
 }
@@ -65,7 +81,7 @@
 .eachProduct__addBtn {
   display: flex;
   color: #989898;
-  width: 20rem;
+  width: 300px;
   height: 2.5rem;
   align-items: center;
   justify-content: center;
@@ -112,7 +128,9 @@
 .eachProduct__info--loading {
   display: flex;
   flex-direction: column;
+  height: 500px;
   gap: 1rem;
+  justify-content: space-between;
 }
 
 .eachProduct__details--loading {
@@ -149,9 +167,8 @@
 .eachProduct__buySetup--loading {
   display: flex;
   flex-direction: column;
-  height: 250px;
   background-color: transparent;
-  gap: 5rem;
+  gap: 2rem;
 }
 
 .eachProduct__price--loading {
@@ -165,8 +182,8 @@
 .eachProduct__addBtn--loading {
   display: flex;
   background-color: #d4d4d4;
-  width: 20rem;
-  height: 75px;
+  width: 300px;
+  height: 50px;
   align-items: center;
   justify-content: center;
   animation: loading 2s ease infinite;

@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
-import Category from "./Category";
-import { User, Heart, LogOut, ShoppingCart } from "lucide-react";
+import CategoryHeader from "./CategoryHeader.jsx";
+import {
+  User,
+  Heart,
+  LogOut,
+  ShoppingCart,
+  ShoppingBasket,
+} from "lucide-react";
 import { getCategories } from "../services/categories.js";
 import { useNavigate } from "react-router";
 import { CartContext } from "../context/cart.jsx";
+import { AuthContext } from "../context/auth.jsx";
 
 import "../styles/header.css";
 
 export default function Header() {
+  const { handleLogout, isLogged } = useContext(AuthContext);
   const { quantity } = useContext(CartContext);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
@@ -18,18 +26,56 @@ export default function Header() {
     });
   }, []);
 
+  if (!isLogged) {
+    return (
+      <header>
+        <div class="header__mainContainer">
+          <section
+            class="header__siteName"
+            onClick={() => navigate("/dashboard")}
+          >
+            <div class="logoContainer__1"></div>
+            <div class="logoContainer__2"></div>
+            <div class="logoContainer__3"></div>
+            <h2 class="header__siteName--text">SCAM</h2>
+          </section>
+          <div class="header__btnsContainerAnon">
+            <button
+              title="Login/Check your account's settings"
+              class="header__cartBtnAnon"
+              onClick={() => navigate("/account")}
+            >
+              <User />
+            </button>
+            <button
+              onClick={() => navigate("/cart")}
+              title="You're shopping anonymously"
+              class="header__cartBtn"
+            >
+              <ShoppingBasket />
+              <sup class="header__cartQttyAnon">{quantity}</sup>
+            </button>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header>
       <div class="header__mainContainer">
-        <section class="header__siteName" onClick={() => navigate("/")}>
+        <section
+          class="header__siteName"
+          onClick={() => navigate("/dashboard")}
+        >
           <div class="logoContainer__1"></div>
           <div class="logoContainer__2"></div>
           <div class="logoContainer__3"></div>
-          <h2 class="header__siteName--text">André Costa</h2>
+          <h2 class="header__siteName--text">SCAM</h2>
         </section>
         <nav class="mainContainer__navbar--desktop--link">
           {categories.map((category, key) => (
-            <Category
+            <CategoryHeader
               class="header__linkBtn"
               key={`category-key-${category.id}-${key}`}
               name={category.name}
@@ -43,14 +89,17 @@ export default function Header() {
           <button
             title="See you soon!"
             class="header__cartBtnLogout"
-            onClick={() => navigate("/login")}
+            onClick={() => {
+              handleLogout();
+              navigate("/");
+            }}
           >
             <LogOut />
           </button>
           <button
             title="Adjust your account's settings"
             class="header__cartBtn"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/account")}
           >
             <User />
           </button>

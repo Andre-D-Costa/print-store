@@ -1,17 +1,21 @@
+import { Category } from "../../models/index.js";
+
 const categoryRoutes = [
   {
     method: "get",
-    path: "/category/",
+    path: "/categories",
     handler: async (req, res) => {
       try {
-        const category = await Category.findById(id);
-        if (!category) {
-          return res.status(404).json({ message: "Category not found" });
+        const categories = await Category.find();
+        if (categories.length === 0) {
+          return res.status(404).json({ message: "No categories found" });
         }
-        return res.status(200).json(category);
+        return res.status(200).json(categories);
       } catch {
         return res.status(500).json({ message: "Internal server error" });
       }
     },
   },
 ];
+
+export default categoryRoutes;

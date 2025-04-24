@@ -13,6 +13,7 @@ export default function AuthContextProvider({ children }) {
 
   const handleLogin = (token) => {
     const payload = jwtDecode(token);
+
     if (Date.now() <= payload.exp * 1000) {
       localStorage.setItem("accessToken", token);
       setUser({ _id: payload._id, email: payload.email, name: payload.name });
@@ -23,6 +24,12 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setIsLogged(false);
+    setUser(null);
+  };
+
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
@@ -31,7 +38,7 @@ export default function AuthContextProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLogged, handleLogin }}>
+    <AuthContext.Provider value={{ user, isLogged, handleLogin, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );

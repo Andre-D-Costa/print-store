@@ -46,16 +46,6 @@ export const logout = async () => {
 //   }).then((resp) => resp.json());
 // };
 
-export const forgotPassword = async (email) => {
-  return fetch("http://localhost:3000/auth/forgot-password", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email }),
-  }).then((resp) => resp.json());
-};
-
 export const resetPassword = async (token, password) => {
   return fetch("http://localhost:3000/auth/reset-password", {
     method: "post",

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 // Cria o context com os seus valores
 export const CartContext = createContext({
@@ -42,18 +42,16 @@ export default function CartContextProvider({ children }) {
         }
       });
       const cartValues = newCart.reduce(
-        (prev, acc) => {
-          return {
-            quantity: acc.quantity + prev.quantity,
-            totalPrice: acc.price * acc.quantity + prev.totalPrice,
-          };
-        },
+        (prev, acc) => ({
+          quantity: acc.quantity + prev.quantity,
+          totalPrice: acc.price * acc.quantity + prev.totalPrice,
+        }),
         {
           quantity: 0,
           totalPrice: 0,
         }
       );
-      setQuantity(cartValues).quantity;
+      setQuantity(cartValues.quantity);
       setTotal(cartValues.totalPrice);
       setCart(newCart);
       saveLocalStorage(newCart, cartValues.totalPrice, cartValues.quantity);
@@ -70,12 +68,61 @@ export default function CartContextProvider({ children }) {
     }
   };
 
-  const removeFromCart = () => {};
+  const removeOneFromCart = (product) => {
+    const cartProduct = cart.find((cartItem) => cartItem._id === product._id);
+
+    if (!cartProduct) return;
+
+    const updatedCart = cart.map((cartItem) => {
+      if (cartItem._id === product._id) {
+        return {
+          ...cartItem,
+          quantity: cartItem.quantity > 0 ? cartItem.quantity - 1 : 0,
+        };
+      } else {
+        return cartItem;
+      }
+    });
+
+    const cartValues = updatedCart.reduce(
+      (prev, acc) => ({
+        quantity: acc.quantity + prev.quantity,
+        totalPrice: acc.price * acc.quantity + prev.totalPrice,
+      }),
+      { quantity: 0, totalPrice: 0 }
+    );
+
+    setCart(updatedCart);
+    setQuantity(cartValues.quantity);
+    setTotal(cartValues.totalPrice);
+    saveLocalStorage(updatedCart, cartValues.totalPrice, cartValues.quantity);
+  };
+
+  const removeAllFromCart = (product) => {
+    const cartProduct = cart.find((cartItem) => cartItem._id === product._id);
+
+    if (!cartProduct) return;
+
+    const updatedCart = cart.filter((cartItem) => cartItem._id !== product._id);
+
+    const cartValues = updatedCart.reduce(
+      (prev, acc) => ({
+        quantity: acc.quantity + prev.quantity,
+        totalPrice: acc.price * acc.quantity + prev.totalPrice,
+      }),
+      { quantity: 0, totalPrice: 0 }
+    );
+
+    setCart(updatedCart);
+    setQuantity(cartValues.quantity);
+    setTotal(cartValues.totalPrice);
+    saveLocalStorage(updatedCart, cartValues.totalPrice, cartValues.quantity);
+  };
 
   const clearCart = () => {
+    setCart([]);
     setQuantity(0);
     setTotal(0);
-    setCart([]);
     saveLocalStorage([], 0, 0);
   };
 
@@ -92,7 +139,15 @@ export default function CartContextProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, total, quantity }}
+      value={{
+        cart,
+        addToCart,
+        removeOneFromCart,
+        removeAllFromCart,
+        clearCart,
+        total,
+        quantity,
+      }}
     >
       {children}
     </CartContext.Provider>

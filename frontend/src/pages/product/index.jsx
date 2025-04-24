@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router";
-import { getProductsBySlug } from "../../services/products.js";
+import { useParams, useNavigate } from "react-router";
+import { getProductBySlug } from "../../services/products.js";
 import { CartContext } from "../../context/cart.jsx";
 
 import "../../styles/eachProduct.css";
@@ -9,13 +9,14 @@ export default function ProductDetails() {
   const { addToCart } = useContext(CartContext);
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const handlePurchase = () => {
     addToCart(product);
   };
 
   useEffect(() => {
-    getProductsBySlug(slug).then((res) => {
+    getProductBySlug(slug).then((res) => {
       setProduct(res);
     });
   }, [slug]);
@@ -34,18 +35,29 @@ export default function ProductDetails() {
           />
           <div class="eachProduct__info">
             <div class="eachProduct__details">
-              <h2 class="eachProduct__category">{product.category.name}</h2>
-              <h1 class="eachProduct__title">{product.name}</h1>
-              <p class="eachProduct__desc">{product.description}</p>
-              <span class="eachProduct__price">€{product.price}</span>
-              <button
-                onClick={handlePurchase}
-                class="eachProduct__addBtn"
-                title="Add to cart"
-              >
-                Add to Cart
-              </button>
+              <div class="eachProduct__textInfoContainer">
+                <h2 class="eachProduct__category">{product.category.name}</h2>
+                <h1 class="eachProduct__title">{product.name}</h1>
+                <p class="eachProduct__desc">{product.description}</p>
+              </div>
+              <div class="eachProduct__priceInfoContainer">
+                <span class="eachProduct__price">€{product.price}</span>
+                <button
+                  onClick={handlePurchase}
+                  class="eachProduct__addBtn"
+                  title="Add to cart"
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
+            <button
+              onClick={() => navigate(-1)}
+              class="eachProduct__addBtn"
+              title="Add to cart"
+            >
+              Back
+            </button>
           </div>
         </div>
       ) : (

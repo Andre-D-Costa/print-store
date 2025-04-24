@@ -28,6 +28,7 @@
 .product__individualContainer {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
@@ -35,7 +36,6 @@
 
   &:hover {
     filter: opacity(0.7);
-    cursor: pointer;
   }
 }
 
@@ -45,8 +45,9 @@
 }
 
 .product__image {
+  object-fit: cover;
   width: 350px;
-  height: auto;
+  height: 350px;
 }
 
 .product__category {

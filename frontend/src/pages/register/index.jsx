@@ -41,7 +41,7 @@ export default function RegistrationPage() {
             Are you already with us?
             <a
               onClick={() => {
-                navigate("/login");
+                navigate("/");
               }}
               class="register__textLink"
             >
@@ -58,7 +58,6 @@ export default function RegistrationPage() {
                 id="name"
                 name="name"
                 type="text"
-                required
                 class="register__nameInput"
               />
               <label htmlFor="name" class="register__text">

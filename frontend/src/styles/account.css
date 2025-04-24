@@ -1,30 +1,85 @@
 .account__mainContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  /* justify-content: center; */
   margin: 0 auto;
   height: 100dvh;
   width: auto;
   z-index: 10;
-  background-color: white;
+  background-color: #f0f0f0;
   color: black;
   font-family: "Host Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  gap: 2rem;
+  gap: 5rem;
+}
+
+.account__userText {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  font-weight: 300;
+  color: #989898;
+  padding: 2rem;
 }
 
 .account__userInfo {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100dvw;
+  justify-content: space-around;
   gap: 2rem;
 }
 
-.account__userText {
+.account__userInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.account__sessExpText {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #989898;
+}
+
+.account__sessExpTextLogin {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #989898;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #000000;
+  }
+}
+
+.account__userSubText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 100;
+  color: #000000;
+  padding: 2rem;
+}
+.account__userSubSubText {
   font-size: 1rem;
   font-weight: 100;
   color: #989898;
+}
+.account__userSubSubSubText {
+  font-size: 1rem;
+  font-weight: 100;
+  color: #ff8787;
+  cursor: pointer;
+}
+
+.account__userOrdersList {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 300px;
+  height: 300px;
 }
